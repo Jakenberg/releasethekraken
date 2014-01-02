@@ -1,0 +1,41 @@
+var scheme   = "<%= @scheme %>";
+var uri      = scheme + window.document.location.host + "/";
+var ws       = new WebSocket(uri);
+
+ws.onmessage = function(message) {
+  var data = JSON.parse(message.data);
+
+  updateTicker(data)
+};
+
+function updateTicker(data){
+  var tickerKeys = ["ask-price", "ask-volume", "bid-price", "bid-volume", "last-price", "last-volume", "price-24h", "volume-24h", "low-24h", "high-24h"];
+  var i;
+
+  for (i = 0; i < tickerKeys.length; i++) {
+    tickerKey = tickerKeys[i];
+    valueSpan = $("div[data-ticker-name='"+data.name+"'] span[data-ticker-"+tickerKey+"]"); 
+
+    previousValue = valueSpan.data("ticker-previous-" + tickerKey);
+    currentValue = valueSpan.text(); //data("ticker-"+tickerKey);
+    newValue = data[tickerKey];
+
+    console.info(valueSpan);
+    console.info("setting " + data.name + " with " + newValue);
+
+    valueSpan.text(newValue);
+
+    if (newValue == previousValue) {
+      //valueSpan.css("background-color", "black");
+    } else {
+
+      valueSpan.data("ticker-previous-" + tickerKey, currentValue);
+
+      if (newValue > previousValue) { 
+        valueSpan.css("color", "green");
+      } else {
+        valueSpan.css("color", "red");
+      }
+    }
+  }
+}
