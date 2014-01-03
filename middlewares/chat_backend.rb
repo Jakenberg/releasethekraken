@@ -30,7 +30,7 @@ module ChatDemo
 
       EM::next_tick do
         Kraken.currency_pairs.each do |k,v|
-          EM.add_periodic_timer(10) do 
+          EM.add_periodic_timer(5) do 
             request = EM::HttpRequest.new("https://api.kraken.com/0/public/Ticker").get(query: {"pair" => v["altname"]})
 
             request.error do
@@ -53,7 +53,7 @@ module ChatDemo
         Faye::WebSocket.load_adapter('thin')
         ws = Faye::WebSocket.new(env, nil, {ping: KEEPALIVE_TIME })
         ws.on :open do |event|
-          p [:open, ws.object_id]
+          #p [:open, ws.object_id]
           @clients << ws
         end
 
@@ -64,7 +64,7 @@ module ChatDemo
         end
 
         ws.on :close do |event|
-          p [:close, ws.object_id, event.code, event.reason]
+          #p [:close, ws.object_id, event.code, event.reason]
           @clients.delete(ws)
           ws = nil
         end
@@ -78,7 +78,7 @@ module ChatDemo
     end
 
     def broadcast_data data
-      p [:broadcasting, data]
+      #p [:broadcasting, data]
       @clients.each {|ws| ws.send(data) }
     end
 
