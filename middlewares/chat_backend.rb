@@ -5,6 +5,8 @@ require 'json'
 require 'erb'
 require "em-http-request"
 
+# https://devcenter.heroku.com/articles/ruby-websockets
+
 module ChatDemo
   class ChatBackend
     KEEPALIVE_TIME = 15 # in seconds
@@ -13,20 +15,6 @@ module ChatDemo
     def initialize(app)
       @app     = app
       @clients = []
-      #uri = URI.parse(ENV["REDISCLOUD_URL"])
-      #@redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
-      #Thread.new do
-        #redis_sub = Redis.new(host: uri.host, port: uri.port, password: uri.password)
-#j,c        redis_sub.subscribe(CHANNEL) do |on|
-          #on.message do |channel, msg|
-            #@clients.each {|ws| ws.send(msg) }
-          #end
-        #end
-      #end
-          #broadcast_data sanitize("name" => "bot", "text" => "#{Time.now}")
-        #EM::add_periodic_timer(1) do
-          #broadcast_data sanitize(%{{"name" : "BOT", "text" : "#{Time.now}"}})
-        #end
 
       EM::next_tick do
         Kraken.currency_pairs.each do |k,v|
