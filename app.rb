@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require_relative 'lib/kraken'
 
-module ChatDemo
+module Ticker
   class App < Sinatra::Base
     get "/" do
       @currency_pairs = Kraken.currency_pairs
