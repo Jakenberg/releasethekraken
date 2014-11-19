@@ -1,6 +1,6 @@
 require './app'
-require './middlewares/chat_backend'
+require './middlewares/ticker_backend'
 
-use ChatDemo::ChatBackend
+use Ticker::Backend
 
-run ChatDemo::App
+run Ticker::App

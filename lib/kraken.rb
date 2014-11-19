@@ -2,8 +2,7 @@ require "open-uri"
 
 class Kraken
   def self.currency_pairs
-    pairs = JSON.parse(open("https://api.kraken.com/0/public/AssetPairs").read)
-    pairs["result"]
+    @@pairs ||= JSON.parse(open("https://api.kraken.com/0/public/AssetPairs").read)["result"]
   end
 
   def self.parse_ticker data
