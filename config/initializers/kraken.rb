@@ -14,4 +14,5 @@ task = Concurrent::TimerTask.new(run_now: true, execution_interval: 5) do |task|
   end
 
 end
+
 task.execute
