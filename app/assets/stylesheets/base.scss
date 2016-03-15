@@ -7,10 +7,20 @@
   height: 500px;
 }
 
+.currency_pairs {
+  width: 45%; 
+  float: left;
+}
+
+.messages {
+  width: 45%;
+  float: right;
+}
+
 .currency_ticker {
   position: relative;
   display: table;
-  min-width: 500px;
+  width: 100%;
   margin: 2px;
   padding: 2px;
   border: 1px solid #ccc;
